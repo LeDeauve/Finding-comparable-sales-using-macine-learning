@@ -17,3 +17,20 @@ def euclidian_distance(vector_1,vector_2):
     except TypeError("Vectors not same length.") as e:
         print(e)
 
+"""def linear_training(data, targets, learning_rate):
+    
+    weights = np.random.random((np.shape(data[0,:])))
+    bias = 0
+
+    for i in range(len(data[:,None])):
+        output = weights @ data[i,:] + bias
+        residual_error = targets[i] - output
+        weights += learning_rate * residual_error
+
+    return weights
+
+
+learning_rate = 0.01
+targets = data[:,4]    # Need to check which index it should be.
+trained_data = linear_training(training_data, targets, learning_rate)
+"""
