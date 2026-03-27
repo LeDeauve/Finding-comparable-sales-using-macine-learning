@@ -16,6 +16,12 @@ def remove_non_numbers(data):
     # Removing all non int or float type features looping from the end.
     iterate = len(del_data[0,:])-1
     for i in range(iterate+1):
+        if type(del_data[0,iterate-i]) == object:
+            try:
+                del_data[:,iterate-i] = del_data[:,iterate-i].as_type(float)
+            except:
+                print('Exception in remove_non_numbers.')
+
         if type(del_data[0,iterate-i]) != float and type(del_data[0,iterate-i]) != int:
             del_data = np.delete(del_data, obj=iterate-i, axis=1)
             del_idx[iterate-i] = iterate-i
@@ -41,7 +47,7 @@ def normalize(data, axis=1):
 def clustering(data, cluster_size=10, min_samples=10, distance_type='euclidean'):
     """Takes data, minimum cluster size, distance metric and returns an array of the data with an added column at index 0 with the cluster label and the number of clusters."""
     clusterer = hdbscan.HDBSCAN(min_cluster_size=cluster_size, min_samples=min_samples ,  metric=distance_type)    # , approx_min_span_tree=True, algorithm='boruvka_balltree'
-    print('shape:', data.shape)
+    print('shape:', data.shape, 'dim:', data.ndim)
     clusterer.fit(data)
     return clusterer.labels_.max()+1 , np.insert(data, 0, clusterer.labels_.flatten(), axis=1)
 
